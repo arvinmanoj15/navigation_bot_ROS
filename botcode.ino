@@ -10,13 +10,13 @@ ros::NodeHandle  nh;
 
 #define LOOPTIME 10
 
-Motor right(10,9,20,21);
-Motor left(6,5,18,19);
+Motor right(10,9,8,7);
+Motor left(6,5,4,3);
 
 volatile long encoder0Pos = 0;    // encoder 1
 volatile long encoder1Pos = 0;    // encoder 2
 
-double left_kp = 3.8 , left_ki = 0 , left_kd = 0.0;             // modify for optimal performance
+double left_kp = 3.8 , left_ki = 0 , left_kd = 0.0;             // modify on your use performance(PID Turning Parameters)
 double right_kp = 4 , right_ki = 0 , right_kd = 0.0;
 
 double right_input = 0, right_output = 0, right_setpoint = 0;
@@ -84,10 +84,6 @@ void loop() {
     demand_speed_left = demandx - (demandz*0.1075);
     demand_speed_right = demandx + (demandz*0.1075);
   
-    /*PID controller for speed control
-      Base speed being 1 ms and the demand_speed variables controlling it at fractions of the base.
-      The PID controller keeps trying to match the difference 
-      in encoder counts to match with the required amount, hence controlling the speed. */
     encoder0Diff = encoder0Pos - encoder0Prev; // Get difference between ticks to compute speed
     encoder1Diff = encoder1Pos - encoder1Prev;
     
